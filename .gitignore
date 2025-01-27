@@ -1,0 +1,65 @@
+# Build Folders
+bin/
+obj/
+
+# User-specific Files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+*.tlog
+
+# Visual Studio-specific Files
+.vscode/
+.vs/
+*.suo
+*.ncb
+*.cache
+*.ide
+*.pdb
+
+# Rider-specific Files
+.idea/
+.idea_modules/
+
+# Dependency Directories
+packages/
+node_modules/
+
+# Publish Outputs
+.publish/
+publish/
+*.publish.xml
+
+# Configuration Files
+appsettings.Development.json
+appsettings.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Environment-specific Files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# OS Files
+Thumbs.db
+.DS_Store
+
+# Backup Files
+*.bak
+*.swp
+*.tmp
+
+# Lock Files
+*.lock
+project.lock.json
+
+# Others
+ReSharper/*
+resharper.xml
+TestResults/
