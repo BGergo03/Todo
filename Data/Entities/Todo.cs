@@ -7,4 +7,6 @@ public class Todo
     public string Title { get; set; }
     
     public string Description { get; set; }
+    
+    public ulong UserId { get; set; }
 }
