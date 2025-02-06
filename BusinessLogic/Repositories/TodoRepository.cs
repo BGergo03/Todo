@@ -1,4 +1,5 @@
 using BusinessLogic.DTOs;
+using BusinessLogic.Exceptions;
 using BusinessLogic.Extensions;
 using Data;
 using Data.Entities;
@@ -52,7 +53,7 @@ public class TodoRepository : ITodoRepository
 
         if (result is null)
         {
-            throw new ApplicationException();
+            throw new TodoNotFoundException($"Todo was not found: {id}");
         }
 
         return result;

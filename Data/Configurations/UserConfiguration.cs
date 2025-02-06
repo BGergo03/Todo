@@ -10,12 +10,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("users");
         builder.HasKey(u => u.Id);
-        builder.Property(u => u.Name)
-            .IsRequired()
-            .HasMaxLength(10);
+        builder.Property(p => p.Name)
+            .IsRequired();
+        builder.HasIndex(p => p.Name)
+            .IsUnique();
         builder.Property(u => u.Password)
-            .IsRequired()
-            .HasMaxLength(20);
+            .IsRequired();
+        builder.Property(u => u.Salt)
+            .IsRequired();
         builder.HasMany(u => u.Todos)
             .WithOne()
             .HasForeignKey(t => t.UserId)
