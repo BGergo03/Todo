@@ -8,10 +8,12 @@ namespace BusinessLogic.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IPasswordService _passwordService;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IPasswordService passwordService)
     {
         _userRepository = userRepository;
+        _passwordService = passwordService;
     }
 
     public async Task RegisterUserAsync(CreateUser createUser, CancellationToken cancellationToken)
@@ -22,8 +24,8 @@ public class UserService : IUserService
             throw new RegistrationException("Password is invalid");
         }
 
-        byte[] salt = PasswordManager.PasswordManager.GenerateSalt();
-        byte[] password = PasswordManager.PasswordManager.HashPassword(createUser.Password, salt);
+        byte[] salt = _passwordService.GenerateSalt();
+        byte[] password = _passwordService.GenerateHash(createUser.Password, salt);
         
         User userToCreate = new User
         {
@@ -41,7 +43,7 @@ public class UserService : IUserService
     {
         var user = await _userRepository.GetUserByNameAsync(createUser.Name, cancellationToken);
 
-        bool success = PasswordManager.PasswordManager.VerifyPassword(createUser.Password, user.Password, user.Salt);
+        bool success = _passwordService.VerifyPassword(createUser.Password, user.Salt, user.Password);
 
         if (!success)
         {

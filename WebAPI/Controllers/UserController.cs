@@ -9,15 +9,17 @@ namespace WebAPI.Controllers;
 public class UserController : ControllerBase
 {
    private readonly IUserService _userService;
+   private readonly IJwtService _jwtService;
    
-   public UserController(IUserService userService)
+   public UserController(IUserService userService, IJwtService jwtService)
    {
       _userService = userService;
+      _jwtService = jwtService;
    }
 
    [HttpPost]
    [Route("register")]
-   public async Task<ActionResult> RegisterUserAsync(CreateUser createUser, CancellationToken cancellationToken)
+   public async Task<ActionResult> RegisterUserAsync([FromBody]CreateUser createUser, CancellationToken cancellationToken)
    {
       try
       {
@@ -33,7 +35,7 @@ public class UserController : ControllerBase
    
    [HttpPost]
    [Route("login")]
-   public async Task<ActionResult> LoginUserAsync(CreateUser createUser, CancellationToken cancellationToken)
+   public async Task<ActionResult> LoginUserAsync([FromBody]CreateUser createUser, CancellationToken cancellationToken)
    {
       try
       {
@@ -43,7 +45,8 @@ public class UserController : ControllerBase
       {
          return BadRequest(exception.Message);
       }
-      
-      return Ok();
+
+      var token = _jwtService.GenerateJwtToken(createUser.Name);
+      return Ok(new { token });
    }
 }

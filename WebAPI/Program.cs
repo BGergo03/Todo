@@ -11,6 +11,8 @@ builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddTransient<IPasswordService, PasswordService>();
+builder.Services.AddTransient<IJwtService, JwtService>();
 
 var app = builder.Build();
 
